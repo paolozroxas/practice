@@ -17,12 +17,9 @@
 *
 */
 
-var rockPaperScissors = function (rounds
-) {
-  // TODO: your solution here
+var rockPaperScissors = function (rounds) {
   var rps = ['rock', 'paper', 'scissors'];
   var ans = [];
-
 
   for (var i = 0; i < 3; i++) {
     for (var j = 0; j < 3; j++) {
@@ -32,13 +29,5 @@ var rockPaperScissors = function (rounds
     }
   }
 
-
-
   return ans;
 };
-
-var rockPaperScissors2 = function(rounds) {
-  var rps = ['rock', 'paper', 'scissors'];
-  var ans = [];
-
-}
