@@ -9,11 +9,7 @@
  * var onlyEven = evenOccurrence([1, 7, 2, 4, 5, 6, 8, 9, 6, 4]);
  * console.log(onlyEven); //  4
 */
-/*
-* example usage:
-* var onlyEven = evenOccurrence([1, 7, 2, 4, 5, 6, 8, 9, 7, 6, 4]);
-* console.log(onlyEven); //  7
-*/
+
 
 var evenOccurrence = function(arr) {
   var storage = {};
@@ -36,7 +32,7 @@ var evenOccurrence = function(arr) {
     }
   } //now you have only even occurences
 
-  for (var i = arr.length - 1; i >= 0; i--) {
+  for (var i = 0; i < arr.length; i++) {
     if (arr[i] in storage) {
       return arr[i];
     }// end if in storage
