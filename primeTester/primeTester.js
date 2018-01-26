@@ -23,7 +23,7 @@ var primeTester = function(n) {
  * saucy, check out the Sieve of Atkin.)
  */
 
-var primeSieve = function (start, end) {
+var primeSieveOld = function (start, end) {
   var ans = [];
   for (var i = start; i <= end; i++) {
     if (primeTester(i)) {
@@ -32,3 +32,37 @@ var primeSieve = function (start, end) {
   }
   return ans;
 };
+
+//Eratosthenes Sieve
+var primeSieve = function (start, end) {
+  var range = {};
+  for (var i = 2; i <= end; i++) {
+    range[i] = true;
+  }
+  var p = 2;
+  while (p <= end) {
+    var oldP = p;
+    console.log('p is ', p);
+    for(var i = 2*p; i <= end; i = i + p) {
+      range[i] = false;
+      console.log('   removing ', i);
+    }
+    for (var i = p + 1; i <= end; i++) {
+      if (range[i]) {
+        p = i;
+        break;
+      }
+    }
+    if (p === oldP) {
+      break;
+    }
+  }
+
+  var ans = [];
+  for (var i = start; i <= end; i++) {
+    if (range[i]) {
+      ans.push(i);
+    }
+  }
+  return ans;
+}
