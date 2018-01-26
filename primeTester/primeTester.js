@@ -9,7 +9,12 @@ var primeTester = function(n) {
     // n isn't a number or n is less than 1 or n is not an integer
     return false;
   }
-  // TODO: return true if n is prime, false otherwise
+  for (var i = n - 1; i > 1; i--) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
 };
 
 /* Extra credit: Write a function that generates a list of all prime numbers
@@ -19,6 +24,11 @@ var primeTester = function(n) {
  */
 
 var primeSieve = function (start, end) {
+  var ans = [];
+  for (var i = start; i <= end; i++) {
+    if (primeTester(i)) {
+      ans.push(i);
+    }
+  }
+  return ans;
 };
-
-
