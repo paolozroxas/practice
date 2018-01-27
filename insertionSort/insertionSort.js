@@ -37,7 +37,7 @@
 // It will transform an array of numbers into an array of valid objects.
 var testingTransform = function(array) {
   var transform = [];
-  
+
   for (var i = 0; i < array.length; i++) {
     transform.push({value: array[i], i: i});
   }
@@ -50,3 +50,56 @@ var insertionSort = function(array
   // Your code goes here. Feel free to add helper functions if needed.
   return array;
 };
+
+var insertionHelper = function(array) {
+  //takes in an object with keys equal to comparison numbers and values equal to order
+  //{1:undef, 2:undef, 3:1, 3,2}
+  var arr = array.slice(0, array.length);
+  var el = array[array.length - 1];
+  var newArr = [];
+
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] < el) {
+      newArr.push(arr[i]);
+    } else if (arr[i] === el)
+  }
+
+
+
+  // var lastIndex = array.length - 1;
+  // var newIndex = lastIndex;
+  //
+  // for (var i = 0; i < array.length -1 ; i++) {
+  //   if (array[lastIndex].value === array[i].value) {
+  //     if (array[lastIndex].order <= array[i].order){
+  //       newIndex = i;
+  //       console.log('case 1')
+  //     } else {
+  //       newIndex = i + 1;
+  //       console.log('case 2')
+  //     }
+  //     break;
+  //   } else if (array[lastIndex].value < array[i].value) {
+  //     console.log('case 3')
+  //     newIndex = i;
+  //     break;
+  //   }
+  // }
+  //
+  // if (newIndex === lastIndex) {
+  //   return array;
+  // }
+  //
+  // console.log('new index is ', newIndex);
+  // console.log('last index is ', lastIndex);
+  //
+  // var ans = [];
+  // var leftArr = array.slice(0, newIndex);
+  // console.log('leftArr is ', leftArr)
+  // var rightArr = array.slice(newIndex + 1, array.length - 1);
+  // console.log('rightArr is ', rightArr)
+  // leftArr.push(array[lastIndex]);
+  // rightArr.unshift(array[newIndex]);
+  // ans = leftArr.concat(rightArr);
+  // return ans;
+}
