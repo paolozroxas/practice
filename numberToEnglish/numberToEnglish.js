@@ -43,6 +43,7 @@ var numbersToWords = {
   90: 'ninety',
 };
 var numbersToPlace = {
+  0: '',
   10: 'ten',
   100: 'hundred',
   1000: 'thousand',
@@ -52,7 +53,60 @@ var numbersToPlace = {
   1000000000000000: 'quadrillion',
   1000000000000000000: 'quintillion',
 };
+var tensPlace = {
+    0: '',
+    1: 'ten',
+    2: 'twenty',
+    3: 'thirty',
+    4: 'forty',
+    5: 'fifty',
+    6: 'sixty',
+    7: 'seventy',
+    8: 'eighty',
+    9: 'ninety'
+}
+
+Number.prototype.toEnglish3 = function () {
+  var str = JSON.stringify(this);
+  var len = str.length;
+  var digit = Number(str.substring(0,1));
+  var tens = Math.pow(10, len-1);
+//   console.log('calling on ', this);
+//   console.log(str, digit, len, tens);
+
+  if (len === 1) {
+      //console.log('base case: ', numbersToWords[digit]);
+      return numbersToWords[digit];
+  } else if (len === 2) {
+    //console.log('returning ', tensPlace[digit] + ' func(' + (this % Math.pow(10, len - 1)) + ')');
+    return tensPlace[digit] + ' ' + Number.prototype.toEnglish3.call(this % (Math.pow(10, len - 1)));
+  }
+  else if (len > 1) {
+      //console.log('returning ', numbersToWords[digit] + numbersToPlace[tens] + ' func(' + (this % Math.pow(10, len - 1)) + ')');
+      return numbersToWords[digit] + ' ' + numbersToPlace[tens] + ' ' + Number.prototype.toEnglish3.call(this % (Math.pow(10, len - 1)));
+  }
+};
 
 Number.prototype.toEnglish = function () {
-  // return my value as english words
-};
+     var str = JSON.stringify(this);
+  var len = str.length;
+  var digit = Number(str.substring(0,1));
+  var tens = Math.pow(10, len-1);
+  console.log('calling on ', this);
+  console.log(str, digit, len, tens);
+
+  var remainder = len % 3;
+  var first = str.substring(0, remainder);
+  var rest = str.substring(remainder,str.length);
+  var multiples = (len - remainder) / 3;
+  if (remainder === 0) {
+      first = str.substring(0, 3);
+      rest = str.substring(3,str.length);
+  }
+
+  if (len <= 3) {
+      return this.toEnglish3();
+  } else {
+      return (Number(first)).toEnglish3() + (Number(rest)).toEnglish();
+  }
+}
