@@ -235914,8 +235914,13 @@ Zyzzogeton
   *
   */
 
-  str = str.split(\n);
-  console.log(str);
+  dict = dict.split('\n');
+  console.log(dict);
+
+  var obj = {};
+  for (var i = 0; i < dict.length; i++) {
+    obj[dict[i].toUpperCase()] = dict[i].toUpperCase();
+  }
 
 var phoneDigitsToLetters = {
   0: '0',
@@ -235932,8 +235937,9 @@ var phoneDigitsToLetters = {
 
 
 var telephoneWords = function(digitString) {
-     if(digitString === 1) {
-       return (phoneDigitsToLetters[digitString]).split('');
+    var ans;
+     if(digitString.length === 1) {
+       ans = (phoneDigitsToLetters[digitString]).split('');
      }
      else {
        var first = digitString[0];
@@ -235949,6 +235955,14 @@ var telephoneWords = function(digitString) {
          }
          arrBig = arrBig.concat(arr);
        }
-       return arrBig;
+       ans = arrBig;
      }
+
+     var ansBig = [];
+     for (var i = 0; i < ans.length; i++) {
+        if (ans[i] in obj) {
+            ansBig.push(ans[i]);
+        }
+     }
+     return ansBig;
 };
