@@ -45,24 +45,14 @@ var testingTransform = function(array) {
   return transform;
 };
 
-var insertionSort = function(array
-) {
+var insertionSort = function(array) {
   // Your code goes here. Feel free to add helper functions if needed.
   return array;
 };
 
 var insertionHelper = function(array) {
-  //takes in an object with keys equal to comparison numbers and values equal to order
-  //{1:undef, 2:undef, 3:1, 3,2}
-  var arr = array.slice(0, array.length);
-  var el = array[array.length - 1];
-  var newArr = [];
 
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] < el) {
-      newArr.push(arr[i]);
-    } else if (arr[i] === el)
-  }
+}
 
 
 
