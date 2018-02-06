@@ -28,7 +28,7 @@ var bind = function(func, binding) {
   var boundFunc = function() {
     var restArgs = arguments;
     var allArgs = args.concat(...restArgs);
-    func.apply(binding, allArgs);
+    return func.apply(binding, allArgs);
   }
   return boundFunc;
 };
@@ -66,7 +66,7 @@ var boundFunc = function() {
   var allArgs = args.concat(...restArgs);
   // console.log('allArgs is ', allArgs);
   // console.log('func is ', func);
-  func.apply(binding, allArgs);
+  return func.apply(binding, allArgs);
 }
 return boundFunc;
 };
