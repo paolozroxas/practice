@@ -30,8 +30,10 @@ var mixEvents = function(obj) {
   	
   };
 
-  obj.trigger = function(eventName, ...restArgs) {
-      events[eventName](restArgs);
+  obj.trigger = function(eventName) {
+      console.log(arguments);
+  	var restArgs = Array.prototype.slice.call(arguments, 1);
+      events[eventName].apply(this, restArgs);
   }
 
   return obj;
