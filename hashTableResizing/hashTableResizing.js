@@ -25,20 +25,89 @@ var makeHashTable = function() {
   var storage = [];
   var storageLimit = 4;
   var size = 0;
+  var resizing = false;
+
+  result.resize = function(newSize) {
+      var oldStorage = storage;
+      var oldLimit = storageLimit;
+      storage = [];
+      storageLimit = newSize;
+      for (var i = 0; i < oldStorage.length; i++) {
+          if (oldStorage[i]) {
+              for (var j = 0; j < oldStorage[i].length; j++) {
+                let key = Object.keys(oldStorage[i][j])[0];
+                this.insert(key, oldStorage[i][j][key]);
+              }
+          }
+      }
+      console.log('old storage was ', oldStorage);
+      console.log('new storage is ', storage);
+      console.log('old limit was ', oldLimit);
+      console.log('new limit is ', storageLimit);
+  };
+
+  result.checkForResize = function() {
+      if(storageLimit > 4) {
+          if (size / storageLimit < 0.25 || size / storageLimit > 0.75) {
+            
+      }
+      
+  };
   
-  result.insert = function(/*...*/ 
-) {
-    // TODO: implement `insert`
+  result.insert = function(str, value) {
+    var key = getIndexBelowMaxForKey(str, storageLimit);
+    var tuple = {};
+    tuple[str] = value;
+    if (!storage[key] || storage[key].length === 0) {
+      storage[key] = [tuple];
+      return;
+    } else {
+      //check str already in array
+      for (var i = 0; i < storage[key].length; i++) {
+        if (str in storage[key][i]) {
+          storage[key][i] = tuple;
+          size++;
+          return;
+        }
+      }
+      storage[key].push(tuple);
+    }
+
   };
 
-  result.retrieve = function(/*...*/ 
-) {
-    // TODO: implement `retrieve`
+  result.retrieve = function(str) {
+    console.log('storage is ', storage);
+    var key = getIndexBelowMaxForKey(str, storageLimit);
+    if (!storage[key]) {
+      return;
+    } else {
+      for (var i = 0; i < storage[key].length; i++) {
+        if (str in storage[key][i]) {
+          return storage[key][i][str];
+        }
+      }
+      return;
+    }
   };
 
-  result.remove = function(/*...*/ 
-) {
-    // TODO: implement `remove`
+  result.remove = function(str) {
+    console.log('storage is ', storage);
+    var key = getIndexBelowMaxForKey(str, storageLimit);
+    if (!storage[key]) {
+      return;
+    } else {
+      for (var i = 0; i < storage[key].length; i++) {
+        if (str in storage[key][i]) {
+            var before = storage[key].slice(0, i);
+            var after = storage[key].slice(i + 1, storage[key].length);
+            var newArr = before.concat(after);
+            storage[key] = newArr;
+            size --;
+            console.log('newArr is now ', newArr);
+        }
+      }
+      return;
+    }
   };
 
   return result;
