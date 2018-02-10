@@ -10,6 +10,16 @@
 // This is a "hashing function". You don't need to worry about it, just use it
 // to turn any string into an integer that is well-distributed between
 // 0 and max - 1
+
+
+
+
+//RESIZE DOESN'T WORK. PLS FIX
+
+
+
+
+
 var getIndexBelowMaxForKey = function(str, max) {
   var hash = 0;
   for (var i = 0; i < str.length; i++) {
@@ -47,14 +57,24 @@ var makeHashTable = function() {
   };
 
   result.checkForResize = function() {
-      if(storageLimit > 4) {
-          if (size / storageLimit < 0.25 || size / storageLimit > 0.75) {
-            
+      var newLimit = storageLimit;
+      if (size / storageLimit < 0.25 && storageLimit > 4) {
+        var newLimit = storageLimit / 2;
+      } else if (size / storageLimit > 0.75) {
+        var newLimit = storageLimit * 2
       }
-      
+      if (storageLimit != newLimit) {
+          resizing = true;
+          this.resize(newLimit);
+          resizing = false;
+      }
+
   };
   
   result.insert = function(str, value) {
+    if (!resizing) {
+        this.checkForResize();
+    }
     var key = getIndexBelowMaxForKey(str, storageLimit);
     var tuple = {};
     tuple[str] = value;
@@ -91,6 +111,7 @@ var makeHashTable = function() {
   };
 
   result.remove = function(str) {
+    this.checkForResize();
     console.log('storage is ', storage);
     var key = getIndexBelowMaxForKey(str, storageLimit);
     if (!storage[key]) {
