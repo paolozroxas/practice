@@ -36,5 +36,34 @@ var Node = function(value) {
 };
 
 var hasCycle = function(linkedList) {
-  // TODO: implement me!
+  var storage = [];
+  var crawler = linkedList;
+
+  while (crawler !== null) {
+
+      var cycle = storage.some(function(el) {
+          if (el === crawler) {
+              return true;
+          } else {
+              return false;
+          }
+      });
+      
+      if (cycle) {
+          return true;
+      }
+      
+      storage.push(crawler);
+      crawler = crawler.next;
+  }
+    return false;
 };
+
+var nodeA = Node('A');
+var nodeB = nodeA.next = Node('B');
+var nodeC = nodeB.next = Node('C');
+var nodeD = nodeC.next = Node('D');
+var nodeE = nodeD.next = Node('E');
+console.log(hasCycle(nodeA)); // => false
+nodeE.next = nodeB;
+console.log(hasCycle(nodeA)); // => true
