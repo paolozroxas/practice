@@ -51,8 +51,45 @@ var insertionSort = function(array) {
 };
 
 var insertionHelper = function(array) {
+  var arr = array.slice(0, array.length - 1);
+  var el = array[array.length - 1];
+  
+  var comparator = (el, a) => {
+    console.log('comparator: ', el, ' and ', a);
+    if (el.value < a.value) {
+      console.log('returning negative')
+      return -1;
+    } else if (el.value > a.value) {
+      console.log('returning positive')
+      return 1;
+    } else if (el.value === a.value) {
+      if(el.order < a.order) {
+        console.log('returning negative')
+        return -1;
+      } else if (el.order > a.order) {
+        console.log('returning positive')
+        return 1;
+      }
+    }
+  }
 
-}
+  var outputArray = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (comparator(el, arr[i]) < 0) {
+      var start = arr.slice(0, i + 1);
+      console.log('start is ', start);
+      return;
+      start.push(el);
+      var end  = arr.slice(i, arr.length);
+      console.log('end is ', end);
+      outputArray = start.concat(end);
+      console.log('outputArray is ', outputArray);
+      return outputArray;
+    }
+  }
+  console.log('already sorted');
+  return array;
+};
 
 
 
