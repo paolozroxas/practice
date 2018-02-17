@@ -5,44 +5,51 @@
  * much like a hashtable, but once it reaches its limit for stored
  * number of items, removes the least recently used (i.e. the oldest
  * by get-date) item from the cache in O(1) time.
- *
- * For instance:
- *
- * var cache = new LRUCache(3); // limit of 3 items
- * cache.set("item1", 1);
- * cache.set("item2", 2);
- * cache.set("item3", 3);
- * cache.set("item4", 4);
- *
- * cache.get("item3") //=> 3
- * cache.get("item2") //=> 2
- * // item1 was removed because it was the oldest item by insertion/usage
- * cache.get("item1") //=> null
- *
- * // item4 is removed to make room, because it is the oldest by usage,
- * // which takes priority.
- * cache.set("item5", 5);
- *
- * // item3 is also removed, because it was retrieved before item2 was
- * // last retrieved.
- * cache.set("item6", 6);
- *
- * You will need a doubly-linked list (provided).
- */
+*/
 
 var LRUCache = function (limit) {
+  this.storage = new List;
+  this.limit = limit;
+
 };
 
 var LRUCacheItem = function (val, key) {
+  this[key] = val;
 };
 
 LRUCache.prototype.size = function () {
+  var ptr = this.storage.head;
+  var count = 0;
+  while(ptr !== null) {
+    ptr = ptr.next;
+    count++;
+  }
+  return count;
 };
 
 LRUCache.prototype.get = function (key) {
+    console.log('getting', key);
+  //put item at head of list
+  var ptr = this.storage.head;
+  while(ptr !== null) {
+    if (key in ptr.val) {
+      this.storage.moveToFront(ptr);
+      return ptr.val[key];
+    }
+    ptr = ptr.next;
+  }
+  return null;
 };
 
 LRUCache.prototype.set = function (key, val) {
+    console.log('size is ', this.size());
+    console.log('setting', key, val);
+  if(this.size() >= this.limit) {
+      console.log('deleting item');
+    this.storage.tail.delete();
+  }
+  this.storage.unshift(new LRUCacheItem(val, key));
+
 };
 
 
@@ -171,3 +178,27 @@ ListNode.prototype.delete = function () {
   if (this.next) { this.next.prev = this.prev; }
 };
 
+
+
+
+
+/*
+  var cache = new LRUCache(3); // limit of 3 items
+  cache.set("item1", 1);
+  cache.set("item2", 2);
+  cache.set("item3", 3);
+  cache.set("item4", 4);
+ 
+  console.log(cache.get("item3")); //=> 3
+  console.log(cache.get("item2")); //=> 2
+  // item1 was removed because it was the oldest item by insertion/usage
+  console.log(cache.get("item1")); //=> null
+ 
+  // item4 is removed to make room, because it is the oldest by usage,
+  // which takes priority.
+  cache.set("item5", 5);
+ 
+  // item3 is also removed, because it was retrieved before item2 was
+  // last retrieved.
+  cache.set("item6", 6);
+  */
