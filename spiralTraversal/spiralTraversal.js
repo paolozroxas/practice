@@ -14,88 +14,105 @@
     returns [1, 2, 3, 6, 9, 8, 7, 4, 5]
  */
 
-var spiralTraversal = function(matrix) {
+var spiralTraversal = function(matrix, spiral) {
+  //If no spiral output array, create it. This is the first function call.
+  if (spiral === undefined) {
+    spiral = [];
+  }
+  //If no matrix, assume user error or all elements already added to
+  //spiral output array. Return spiral.
+  if (matrix === undefined || matrix.length === 0) {
+    return spiral;
+  }
+  
+  //matrix dimensions
   var xlen = matrix.length;
   var ylen = matrix[0].length;
 
-  var top = 0;
-  var left = 0;
-  var right = ylen - 1;
-  var bottom = xlen - 1;
-  var count = [0];
-
-  var spiral = [];
-
-  while (1) {
-    
-    if (traverseTop(matrix, top, left, right - 1, spiral, count, xlen * ylen)) {
-        return spiral;
+  //determines how layers will be added in traversals
+  var params = {};
+  params.top = 0;
+  params.left = 0;
+  params.right = ylen - 1;
+  params.bottom = xlen - 1;
+  
+  //Base cases:
+  if (xlen === 1) {
+    for (var i = 0; i < ylen; i++) {
+      spiral.push(matrix[0][i]);
     }
-
-    if (traverseRight(matrix, right, top, bottom - 1, spiral, count, xlen * ylen)) {
-        return spiral;
+    return spiral;
+  } else if (ylen === 1) {
+    for (var i = 0; i < xlen; i++) {
+      spiral.push(matrix[i][0]);
     }
+    return spiral;
+  }
 
-    if (traverseBottom(matrix, bottom, right, left + 1, spiral, count, xlen * ylen)) {
-        return spiral;
+  //Recursive Case:
+  //adds outermost elements to spiral, then calls spiralTraversal on peeled matrix
+  else if (xlen * ylen >= 4) {
+    traversals.top(matrix, params.top, params.left, params.right - 1, spiral);
+
+    traversals.right(matrix, params.right, params.top, params.bottom - 1, spiral);
+
+    traversals.bottom(matrix, params.bottom, params.right, params.left + 1, spiral);
+
+    traversals.left(matrix, params.left, params.bottom, params.top + 1, spiral);
+
+    params.top++;
+    params.left++
+    params.right--;
+    params.bottom--;
+
+    return spiralTraversal(peel(matrix), spiral);
+  }
+  
+
+};
+
+//Add array elemments from either top, right, bottom, left of matrix
+var traversals = {
+  top: function(matrix, topIndex, start, end, outputArray) {
+    for (var i = start; i <= end; i++) {
+      outputArray.push(matrix[topIndex][i]);
+      console.log('spiral is now', outputArray);
     }
-
-    if (traverseLeft(matrix, left, bottom, top + 1, spiral, count, xlen * ylen)) {
-        return spiral;
+  },
+  right: function(matrix, rightIndex, start, end, outputArray) {
+    for (var i = start; i <= end; i++) {
+      outputArray.push(matrix[i][rightIndex]);
+      console.log('spiral is now', outputArray);
     }
-
-    top++;
-    right--;
-    bottom--;
-    left++;
-
+  },
+  bottom: function(matrix, bottomIndex, start, end, outputArray) {
+    for (var i = start; i >= end; i--) {
+      outputArray.push(matrix[bottomIndex][i]);
+      console.log('spiral is now', outputArray);
+    }
+  },
+  left: function(matrix, leftIndex, start, end, outputArray) {
+    for (var i = start; i >= end; i--) {
+      outputArray.push(matrix[i][leftIndex]);
+      console.log('spiral is now', outputArray);
+    }
   }
 };
 
-var traverseTop = function(matrix, topIndex, start, end, outputArray, count, max) {
-    for (var i = start; i <= end; i++) {
-        outputArray.push(matrix[topIndex][i]);
-        console.log('spiral is now', outputArray);
-        count[0]++;
-        if (count[0] >= max) {
-            return true;
-        }
-    }
-    return false;
-}
+//removes outer layer of matrix
+var peel = function(matrix) {
+  //assume matrix has a center
 
-var traverseRight = function(matrix, rightIndex, start, end, outputArray, count, max) {
-    for (var i = start; i <= end; i++) {
-        outputArray.push(matrix[i][rightIndex]);
-        console.log('spiral is now', outputArray);
-        count[0]++;
-        if (count[0] >= max) {
-            return true;
-        }
-    }
-    return false;
-}
+  //create copy of matrix
+  var result = matrix.slice();
 
-var traverseBottom = function(matrix, bottomIndex, start, end, outputArray, count, max) {
-    for (var i = start; i >= end; i--) {
-        outputArray.push(matrix[bottomIndex][i]);
-        console.log('spiral is now', outputArray);
-        count[0]++;
-        if (count[0] >= max) {
-            return true;
-        }
-    }
-    return false;
-}
+  //cleave top and bottom
+  result = result.slice(1, result.length - 1);
+  
+  //cleave sides
+  for (var i = 0; i < result.length; i++) {
+    result[i] = result[i].slice(1, result[i].length - 1);
+  }
 
-var traverseLeft = function(matrix, leftIndex, start, end, outputArray, count, max) {
-    for (var i = start; i >= end; i--) {
-        outputArray.push(matrix[i][leftIndex]);
-        console.log('spiral is now', outputArray);
-        count[0]++;
-        if (count[0] >= max) {
-            return true;
-        }
-    }
-    return false;
+  return result;
 }
