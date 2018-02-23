@@ -36,16 +36,16 @@ var translateRomanNumeral = function(romanNumeral) {
 
   for (var i = 0; i < romanNumeral.length - 1; i++) {
     //console.log('i is', i);
-    var j = i + 1;
     var addend = DIGIT_VALUES[romanNumeral[i]];
-    var nextAddend = DIGIT_VALUES[romanNumeral[j]];
+    var nextAddend = DIGIT_VALUES[romanNumeral[i + 1]];
     if(addend < nextAddend) {
       //console.log('subtracting');
       addend = nextAddend - addend;
       i++;
     }
-    if(i === romanNumeral.length -2) {
+    if (i === romanNumeral.length -2) {
       //console.log('last index');
+      nextAddend = DIGIT_VALUES[romanNumeral[i + 1]];
       addend += nextAddend;
     }
     //console.log('addend is', addend);
@@ -55,3 +55,10 @@ var translateRomanNumeral = function(romanNumeral) {
   return sum;
 
 };
+
+
+// translateRomanNumeral('MCMLIV').should.eql(1954);
+// translateRomanNumeral('MCMXC').should.eql(1990);
+// translateRomanNumeral('MMVIII').should.eql(2008);
+// translateRomanNumeral('MDCCCCX').should.eql(1910);
+// translateRomanNumeral('MCMX').should.eql(1910);
