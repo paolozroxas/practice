@@ -28,6 +28,30 @@ var DIGIT_VALUES = {
 };
 
 var translateRomanNumeral = function(romanNumeral) {
-// TODO: Implement me!
+  if (romanNumeral.length === 1) {
+    return DIGIT_VALUES[romanNumeral];
+  }
+
+  var sum = 0;
+
+  for (var i = 0; i < romanNumeral.length - 1; i++) {
+    //console.log('i is', i);
+    var j = i + 1;
+    var addend = DIGIT_VALUES[romanNumeral[i]];
+    var nextAddend = DIGIT_VALUES[romanNumeral[j]];
+    if(addend < nextAddend) {
+      //console.log('subtracting');
+      addend = nextAddend - addend;
+      i++;
+    }
+    if(i === romanNumeral.length -2) {
+      //console.log('last index');
+      addend += nextAddend;
+    }
+    //console.log('addend is', addend);
+    sum += addend;
+  }
+
+  return sum;
 
 };
