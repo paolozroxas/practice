@@ -28,10 +28,11 @@ var DIGIT_VALUES = {
 };
 
 var translateRomanNumeral = function(romanNumeral) {
-  if (typeof romanNumeral !== String) {
+  if (typeof romanNumeral !== 'string') {
     return null;
-  }
-  if (romanNumeral.length === 1) {
+  } else if (romanNumeral.length === 0) {
+    return 0;
+  } else if (romanNumeral.length === 1) {
     return DIGIT_VALUES[romanNumeral];
   }
 
