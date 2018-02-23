@@ -28,6 +28,9 @@ var DIGIT_VALUES = {
 };
 
 var translateRomanNumeral = function(romanNumeral) {
+  if (typeof romanNumeral !== String) {
+    return null;
+  }
   if (romanNumeral.length === 1) {
     return DIGIT_VALUES[romanNumeral];
   }
