@@ -38,7 +38,16 @@ var makeBoard = function(n) {
 };
 
 var robotPaths = function(n, board, i, j) {
- debugger
+  if (!board) {
+      board = makeBoard(n);
+  }
+  if (!i) {
+      i = 0;
+  }
+  if (!j) {
+      j= 0;
+  }
+  
   if (i === n - 1 && j === n - 1) {
     return 1;
   }
@@ -73,6 +82,5 @@ var robotPaths = function(n, board, i, j) {
 
 };
 
-// //Tests:
-// var board = makeBoard(3);
-// console.log('number of paths:', robotPaths(3, board, 0, 0));
+//Tests:
+//console.log('number of paths:', robotPaths(6));
