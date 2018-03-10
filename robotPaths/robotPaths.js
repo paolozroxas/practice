@@ -38,7 +38,7 @@ var makeBoard = function(n) {
 };
 
 var robotPaths = function(n, board, i, j) {
-    debugger
+ debugger
   if (i === n - 1 && j === n - 1) {
     return 1;
   }
@@ -63,14 +63,16 @@ var robotPaths = function(n, board, i, j) {
     return 0;
   }
 
-  var validPaths = validChoices.reduce(function(x, y) { // each element is [i, j]
-    return robotPaths(n, board.makeCopy(), x[0], x[1]) + robotPaths(n, board.makeCopy(), y[0], y[1]);
-  });
-
-  return validPaths;
+  if (validChoices.length === 1) {
+      return robotPaths(n, board.makeCopy(), validChoices[0][0], validChoices[0][1]);
+  } else {
+      return validChoices.reduce(function(acc, el) { // each element is [i, j]
+        return acc + robotPaths(n, board.makeCopy(), el[0], el[1]);
+    }, 0);
+  }
 
 };
 
 // //Tests:
-// var board = makeBoard(2);
-// console.log('number of paths:', robotPaths(2, board, 0, 0));
+// var board = makeBoard(3);
+// console.log('number of paths:', robotPaths(3, board, 0, 0));
