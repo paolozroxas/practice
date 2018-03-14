@@ -17,7 +17,7 @@ var firstNonRepeatedCharacter = function(string) {
   }
 
   var earliest = { letter: null, order: string.length };
-  for (letter in storage) {
+  for (var letter in storage) {
     if (storage[letter].count === 1) {
       if (earliest.order > storage[letter].order) {
         earliest.letter = letter;
