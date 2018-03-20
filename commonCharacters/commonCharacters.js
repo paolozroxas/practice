@@ -12,6 +12,27 @@
 
 
 
-var commonCharacters = function(string1, string2) {
-  // TODO: Your code here!
+var commonCharacters = function(string1) {
+
+  var duplicateCount = {};
+  for (var i = 0; i < string1.length; i++) {
+    duplicateCount[string1[i]] = 1;
+  }
+
+  for (var i = 1; i < arguments.length; i++) {
+    var string = arguments[i];
+    for (var j = 0; j < string.length; j++) {
+      if (duplicateCount.hasOwnProperty(string[j])) {
+        duplicateCount[string[j]] = i + 1;
+      }
+    }
+  }
+
+  var result = '';
+  for (var i = 0; i < string1.length; i++) {
+    if (duplicateCount[string1[i]] === arguments.length) {
+      result += string1[i];
+    }
+  }
+  return result;
 };
