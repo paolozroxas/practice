@@ -18,4 +18,22 @@
  */
 
 var powerSet = function(str) {
+  var result = [];
+  for (var i = 0; i < 16; i++) {
+    var bin = toBinary(i);
+  }
+
 };
+
+var toBinary = function(num) {
+  var curr = num;
+  var bin = [0, 0, 0, 0];
+  for (var i = 0; i < 4; i++) {
+    var pow = 3 - i;
+    if (curr >= Math.pow(2, pow)) {
+      bin[i] = 1;
+      curr = curr % Math.pow(2, pow);
+    }
+  }
+  return bin;
+}
