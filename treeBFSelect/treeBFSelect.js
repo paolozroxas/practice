@@ -68,6 +68,9 @@ var Tree = function(value) {
 
 Tree.prototype.BFSelect = function(filter, depth) {
   // return an array of values for which the function filter(value, depth) returns true
+  if (depth === undefined) {
+    depth = 0;
+  }
   var queue = new Queue();
   var result = [];
   for (var i = 0; i < this.children.length; i++) {
