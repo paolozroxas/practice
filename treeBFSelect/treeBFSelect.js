@@ -68,16 +68,19 @@ var Tree = function(value) {
 
 Tree.prototype.BFSelect = function(filter, depth) {
   // return an array of values for which the function filter(value, depth) returns true
+  var result = [];
   if (depth === undefined) {
-    depth = 0;
+    var depth = 0;
+    if (filter(this.value, depth)) {
+      result.push(this.value);
+    }
   }
   var queue = new Queue();
-  var result = [];
   for (var i = 0; i < this.children.length; i++) {
-    if (filter(children[i].value, depth)) {
-      result.push(children[i].value);
+    if (filter(this.children[i].value, depth + 1)) {
+      result.push(this.children[i].value);
     }
-    queue.enqueue(children[i]);
+    queue.enqueue(this.children[i]);
   }
   while (true) {
     var child = queue.dequeue();
