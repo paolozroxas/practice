@@ -30,15 +30,60 @@
  * Basic tree that stores a value.
  */
 
+var Queue = function() {
+  this.storage = [];
+  this.start = 0;
+  this.end = 0;
+  this.count = 0;
+}
+Queue.prototype.enqueue = function(value) {
+  if (this.count === 0) {
+    this.count++;
+    this.storage[this.start] = value;
+  } else {
+    this.count++;
+    this.start--;
+    this.storage[this.start] = value;
+  }
+  return value;
+}
+Queue.prototype.dequeue = function() {
+  if (this.count === 0) {
+    return null;
+  } else if (this.count === 1) {
+    this.count--;
+    return this.storage[this.end];
+  } else {
+    this.count--;
+    var value = this.storage[this.end];
+    this.end--;
+    return value;
+  }
+}
+
 var Tree = function(value) {
   this.value = value;
   this.children = [];
 };
 
-
-
-Tree.prototype.BFSelect = function(filter) {
+Tree.prototype.BFSelect = function(filter, depth) {
   // return an array of values for which the function filter(value, depth) returns true
+  var queue = new Queue();
+  var result = [];
+  for (var i = 0; i < this.children.length; i++) {
+    if (filter(children[i].value, depth)) {
+      result.push(children[i].value);
+    }
+    queue.enqueue(children[i]);
+  }
+  while (true) {
+    var child = queue.dequeue();
+    if (child === null) {
+      break;
+    }
+    result = result.concat(child.BFSelect(filter, depth + 1))
+  }
+  return result;
 };
 
 /**

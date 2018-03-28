@@ -17,11 +17,19 @@
  * -> ["", "j", "ju", "jm", "jp", "jmu", "jmp", "jpu", "jmpu", "u", "m", "p", "mu", "mp", "pu", "mpu"]
  */
 
+
+ //STILL INCOMPLETE: please refactor for cases where word is not length 4.
+
 var powerSet = function(str) {
   var result = [];
   for (var i = 0; i < 16; i++) {
     var bin = toBinary(i);
+    var letters = bin.map(function(value, index) {
+      return value ? str[index] : '';
+    });
+    result.push(letters.join(''));
   }
+  return result;
 
 };
 
