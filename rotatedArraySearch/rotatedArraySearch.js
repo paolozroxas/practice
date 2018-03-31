@@ -16,6 +16,17 @@
  */
 
 var rotatedArraySearch = function (rotated, target) {
-  // Your code here:
+  var start = 0;
+  var end = rotated.length - 1;
+  var mid = Math.floor(rotated.length / 2);
+
+  
 };
 
+var isBetween = function(target, x, y) {
+  if (x < y) {
+    return target > x && target < y;
+  } else {
+    return target < x || target > y;
+  }
+}
