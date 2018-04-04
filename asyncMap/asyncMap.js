@@ -40,4 +40,25 @@
 
 
 var asyncMap = function(tasks, callback) {
+  var results = [];
+  var completionCount = 0;
+  for (var i = 0; i < tasks.length; i++) {
+    let index = i;
+    tasks[index](function(result) {
+      results[index] = result;
+      completionCount++;
+    });
+  }
+  var checkCompletion = function() {
+    if (completionCount === tasks.length) {
+      callback(results);
+    } else {
+      setTimeout(checkCompletion, 0);
+    }
+  };
+  checkCompletion();
 };
+
+
+
+
