@@ -98,5 +98,31 @@
 
 
 var mergeSort = function(array) {
-  // Your code here.
+  if (array.length === 1) {
+    return array;
+  }
+
+  var mid = Math.floor(array.length / 2);
+  var arr1 = array.slice(0, mid);
+  var arr2 = array.slice(mid, array.length);
+
+  return merge(mergeSort(arr1), mergeSort(arr2));
+
 };
+
+var merge = function(arr1, arr2) {
+  var total = arr1.length + arr2.length;
+  var result = [];
+  var idx1 = 0;
+  var idx2 = 0;
+  for (var i = 0; i < total; i++) {
+    if (arr1[idx1] <= arr2[idx2] || arr2[idx2] === undefined) {
+      result.push(arr1[idx1]);
+      idx1++;
+    } else if (arr1[idx1] > arr2[idx2] || arr1[idx1] === undefined) {
+      result.push(arr2[idx2]);
+      idx2++;
+    }
+  }
+  return result;
+}
