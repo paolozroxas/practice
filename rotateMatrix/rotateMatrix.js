@@ -44,6 +44,10 @@
  */
 
 var rotateMatrix = function(matrix, direction) {
+  if (matrix.length === 0) {
+    return matrix;
+  }
+
   if (direction === undefined) {
     direction = 1;
   }
