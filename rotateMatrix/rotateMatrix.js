@@ -44,15 +44,19 @@
  */
 
 var rotateMatrix = function(matrix, direction) {
+  if (direction === undefined) {
+    direction = 1;
+  }
+
   //init matrix 2 with zeros
+  var matrix2 = [];
   for (var i = 0; i < matrix[0].length; i++) {
     var row = [];
     for (var j = 0; j < matrix.length; j++) {
-      row.push[0];
+      row.push(0);
     }
     matrix2.push(row)
   }
-
 
   for (var i = 0; i < matrix.length; i++) {
     for (var j = 0; j < matrix[0].length; j++) {
